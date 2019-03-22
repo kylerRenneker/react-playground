@@ -11,36 +11,31 @@ class Accordion extends Component {
     }
 
     state = {
-        currentSectionIndex: 0
+        currentSectionIndex: null
     }
 
     handleButtonClicked(index) {
         this.setState({currentSectionIndex: index})
     }
 
-    renderButtons() {
 
-        console.log(this.props.sections);
-        return this.props.sections.map((section, index) => 
-            <li key = {index}>
-                <button onClick = {() => this.handleButtonClicked(index)}>{section.title}</button>
-                <p>{section.content}</p>
+    renderContent(section, id, currentSectionIndex) {
+
+        return (
+            <li key={id}>
+                <button onClick={() => this.handleButtonClicked(id)}>{section.title}</button>
+                {(currentSectionIndex === id) && <p>{section.content}</p>}
             </li>
         )
+        
     }
 
-    // renderContent() {
-    //     const currentSection = this.props.sections[this.state.currentSectionIndex]
-    //     return (
-            
-    //     )
-    // }
-
     render(){
+        const { currentSectionIndex } = this.state
+        const { sections } = this.props
         return (
             <ul>
-                {this.renderButtons()}
-                {/* {this.renderContent()} */}
+                {sections.map((section, id) => this.renderContent(section, id, currentSectionIndex))}
             </ul>
         )
     }
